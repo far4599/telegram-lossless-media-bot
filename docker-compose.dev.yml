@@ -6,6 +6,9 @@ services:
     mem_limit: 128m
     cpus: 2
     volumes:
-      - ./session:/app/session
+      - bot-sessions-volume:/app/session
     env_file:
-      - ./.env
+      - .env
+
+volumes:
+  bot-sessions-volume:
