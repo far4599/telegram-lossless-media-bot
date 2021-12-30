@@ -90,8 +90,6 @@ func (h *messageHandler) documentToMedia(ctx context.Context, entities tg.Entiti
 		return fmt.Errorf("unsupported content type '%s'", doc.GetMimeType())
 	}
 
-	down := downloader.NewDownloader()
-
 	tmpDir, err := ioutil.TempDir("", "")
 	if err != nil {
 		return err
@@ -99,12 +97,15 @@ func (h *messageHandler) documentToMedia(ctx context.Context, entities tg.Entiti
 	defer os.Remove(tmpDir)
 
 	filePath := path.Join(tmpDir, getDocFileName(doc))
+	if filePath == "" {
+		return fmt.Errorf("file name is empty")
+	}
 	defer os.Remove(filePath)
 
 	_ = target.TypingAction().Typing(ctx)
 
-	loc := doc.AsInputDocumentFileLocation()
-	if _, err := down.Download(h.api, loc).ToPath(ctx, filePath); err != nil {
+	_, err = downloader.NewDownloader().Download(h.api, doc.AsInputDocumentFileLocation()).ToPath(ctx, filePath)
+	if err != nil {
 		return err
 	}
 
