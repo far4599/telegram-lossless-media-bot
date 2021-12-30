@@ -3,7 +3,7 @@ package app
 import (
 	"context"
 
-	"github.com/far4599/telegram-bot-lossless-video-upload/internal/service"
+	"github.com/far4599/telegram-lossless-media-bot/internal/service"
 	"github.com/gotd/td/telegram"
 	"github.com/gotd/td/tg"
 	"go.uber.org/zap"

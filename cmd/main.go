@@ -4,7 +4,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/far4599/telegram-bot-lossless-video-upload/internal/app"
+	"github.com/far4599/telegram-lossless-media-bot/internal/app"
 	"go.uber.org/zap"
 )
 

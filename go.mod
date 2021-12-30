@@ -1,9 +1,10 @@
-module github.com/far4599/telegram-bot-lossless-video-upload
+module github.com/far4599/telegram-lossless-media-bot
 
 go 1.17
 
 require (
 	github.com/gotd/td v0.53.0
+	go.uber.org/atomic v1.9.0
 	go.uber.org/zap v1.19.1
 )
 
@@ -22,7 +23,6 @@ require (
 	github.com/mattn/go-isatty v0.0.13 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.1 // indirect
-	go.uber.org/atomic v1.9.0 // indirect
 	go.uber.org/multierr v1.7.0 // indirect
 	golang.org/x/crypto v0.0.0-20211215165025-cf75a172585e // indirect
 	golang.org/x/net v0.0.0-20210916014120-12bc252f5db8 // indirect

@@ -7,7 +7,7 @@ import (
 	"os"
 	"path"
 
-	"github.com/far4599/telegram-bot-lossless-video-upload/internal/model"
+	"github.com/far4599/telegram-lossless-media-bot/internal/model"
 	"github.com/gotd/td/telegram/downloader"
 	"github.com/gotd/td/telegram/message"
 	"github.com/gotd/td/telegram/message/styling"
