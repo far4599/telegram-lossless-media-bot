@@ -1,8 +1,8 @@
 # Lossless media bot for Telegram
 
-### Demo: [https://t.me/lossless_media_bot](@lossless_media_bot)
+### Demo: [@lossless_media_bot](https://t.me/lossless_media_bot)
 
-If you've used Telegram mobile client to upload photos or videos, you know it compresses media and usually it looks creepy and video quality is very low. This bot will help you to upload videos and photos in the original quality.
+If you've used Telegram mobile client to upload photos or videos, you know it compresses media so that it looks creepy and video quality is very low. This bot will help you to upload videos and photos in the original quality.
 
 This bot uses Telegram user_api to download and upload files bigger than 50mb.
 
@@ -10,7 +10,7 @@ This bot uses Telegram user_api to download and upload files bigger than 50mb.
 
 To run your own bot it is required:
 1. to create dev api via my.telegram.org
-2. to create a bot via [https://t.me/BotFather](@BotFather)
+2. to create a bot via [@BotFather](https://t.me/BotFather)
 3. to have got a linux server with docker (and docker-compose) installed. 
 
 When you have all requirements, do the following:
