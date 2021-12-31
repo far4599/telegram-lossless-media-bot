@@ -4,6 +4,7 @@ go 1.17
 
 require (
 	github.com/gotd/td v0.53.0
+	github.com/pkg/errors v0.9.1
 	go.uber.org/atomic v1.9.0
 	go.uber.org/automaxprocs v1.4.0
 	go.uber.org/zap v1.19.1

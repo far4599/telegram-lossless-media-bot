@@ -17,13 +17,13 @@ func main() {
 
 	if os.Getenv("DEBUG") == "true" {
 		logger, err = zap.NewDevelopment()
+		if err != nil {
+			log.Fatal(err)
+		}
 	}
 	defer logger.Sync()
 
-	//a := app.NewApp(appID, appHash, botToken, logger)
-	a := app.NewApp(logger)
-
-	if err := a.Run(); err != nil {
+	if err := app.NewApp(logger).Run(); err != nil {
 		log.Fatal(err)
 	}
 }

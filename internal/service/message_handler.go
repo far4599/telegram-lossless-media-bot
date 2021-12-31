@@ -13,6 +13,7 @@ import (
 	"github.com/gotd/td/telegram/message/styling"
 	"github.com/gotd/td/telegram/uploader"
 	"github.com/gotd/td/tg"
+	"github.com/pkg/errors"
 	"go.uber.org/zap"
 )
 
@@ -65,6 +66,7 @@ func (h *messageHandler) documentToMedia(ctx context.Context, entities tg.Entiti
 		_ = target.TypingAction().Cancel(ctx)
 
 		if err != nil {
+			h.logger.Error("request failed", zap.Error(err))
 			_, _ = s.Reply(entities, update).Text(ctx, fmt.Sprintf("failed with error: %+v", err))
 		}
 	}()
@@ -92,15 +94,18 @@ func (h *messageHandler) documentToMedia(ctx context.Context, entities tg.Entiti
 
 	tmpDir, err := ioutil.TempDir("", "")
 	if err != nil {
-		return err
+		return errors.Wrap(err, "failed to create tmp folder")
 	}
 	defer os.Remove(tmpDir)
 
-	filePath := path.Join(tmpDir, getDocFileName(doc))
+	fileName := getDocFileName(doc)
+	filePath := path.Join(tmpDir, fileName)
 	if filePath == "" {
 		return fmt.Errorf("file name is empty")
 	}
 	defer os.Remove(filePath)
+
+	h.logger.Info("received document", zap.String("document_type", dt.String()), zap.String("file_name", fileName), zap.String("peer_id", m.GetPeerID().String()))
 
 	_ = target.TypingAction().Typing(ctx)
 
@@ -111,6 +116,7 @@ func (h *messageHandler) documentToMedia(ctx context.Context, entities tg.Entiti
 
 	uploaderProgress := model.NewUploaderProgress()
 	defer uploaderProgress.Close()
+
 	go func() {
 		for progress := range uploaderProgress.ProgressChan() {
 			h.logger.Debug("upload progress changed", zap.Int32("progress", progress), zap.String("filePath", filePath))
@@ -124,7 +130,7 @@ func (h *messageHandler) documentToMedia(ctx context.Context, entities tg.Entiti
 
 	f, err := u.WithProgress(uploaderProgress).FromPath(ctx, filePath)
 	if err != nil {
-		return fmt.Errorf("upload %q: %w", filePath, err)
+		return errors.Wrap(err, fmt.Sprintf("failed to upload %s", fileName))
 	}
 
 	var md message.MediaOption
@@ -140,7 +146,8 @@ func (h *messageHandler) documentToMedia(ctx context.Context, entities tg.Entiti
 		return err
 	}
 
-	if _, err := target.Revoke().Messages(ctx, m.ID); err != nil {
+	_, err = target.Revoke().Messages(ctx, m.ID)
+	if err != nil {
 		return err
 	}
 
