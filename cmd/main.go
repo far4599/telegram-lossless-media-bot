@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/far4599/telegram-lossless-media-bot/internal/app"
+	_ "go.uber.org/automaxprocs"
 	"go.uber.org/zap"
 )
 
