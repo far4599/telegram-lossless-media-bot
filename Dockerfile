@@ -1,4 +1,4 @@
-FROM golang:1.17-alpine as builder
+FROM golang:1.20-alpine as builder
 WORKDIR /src
 ADD . .
 RUN go mod download && CGO_ENABLED=0 GOOS=linux go build -a -o main ./cmd
